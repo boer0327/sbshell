@@ -70,31 +70,7 @@ if grep -qi 'debian\|ubuntu\|armbian' /etc/os-release; then
 elif grep -qi 'openwrt' /etc/os-release; then
     echo -e "${GREEN}系统为OpenWRT,支持运行此脚本。${NC}"
     MAIN_SCRIPT_URL="$OPENWRT_MAIN_SCRIPT_URL"
-    DEPENDENCIES=("nftables")
 
-    # 检查并安装缺失的依赖项
-    for DEP in "${DEPENDENCIES[@]}"; do
-        if [ "$DEP" == "nftables" ]; then
-            CHECK_CMD="nft --version"
-        fi
-
-        if ! $CHECK_CMD &> /dev/null; then
-            echo -e "${RED}$DEP 未安装。${NC}"
-            read -rp "是否安装 $DEP?(y/n): " install_dep
-            if [[ "$install_dep" =~ ^[Yy]$ ]]; then
-                opkg update
-                opkg install "$DEP"
-                if ! $CHECK_CMD &> /dev/null; then
-                    echo -e "${RED}安装 $DEP 失败，请手动安装 $DEP 并重新运行此脚本。${NC}"
-                    exit 1
-                fi
-                echo -e "${GREEN}$DEP 安装成功。${NC}"
-            else
-                echo -e "${RED}由于未安装 $DEP,脚本无法继续运行。${NC}"
-                exit 1
-            fi
-        fi
-    done
 else
     echo -e "${RED}当前系统不是Debian/Ubuntu/Armbian/OpenWRT,不支持运行此脚本。${NC}"
     exit 1
