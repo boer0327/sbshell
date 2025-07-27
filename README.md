@@ -28,14 +28,6 @@ bash <(curl -sL https://ghfast.top/https://raw.githubusercontent.com/boer0327/sb
 - TProxy模式的防火墙后端支持 `nftables` 和 `iptables`，可在菜单中自由切换。
 - 非openwrt并使用2.1.2之前版本的用户想要升级并且使用1.12.X版本内核建议卸载重装
 
-### 系统信息自动显示美化脚本：
-```
-bash <(curl -sL https://gh-proxy.com/https://raw.githubusercontent.com/boer0327/DPInfo-script/refs/heads/main/auto-sysinfo.sh)
-```
-  执行后每次进入ssh会自动显示很多必要信息！
-  仓库：
-  https://github.com/boer0327/DPInfo-script
-
 ## 适配配置文件：
 
 ### 稳定版(1.11)：  
@@ -47,6 +39,6 @@ https://gh-proxy.com/https://raw.githubusercontent.com/boer0327/sbshell/refs/hea
 
 ## 其他问题：
 
-**请查看[wiki](https://github.com/boer0327/sbshell/wiki)**
+**请查看[wiki](https://github.com/qljsyph/sbshell/wiki)**
 
 
