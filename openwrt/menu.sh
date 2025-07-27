@@ -22,29 +22,29 @@ if ! grep -qi 'openwrt' /etc/os-release; then
 fi
 
 # 脚本的URL基础路径
-BASE_URL="https://gh-proxy.com/https://raw.githubusercontent.com/boer0327/sbshell/refs/heads/main/openwrt"
+BASE_URL="https://gh-proxy.com/https://raw.githubusercontent.com/boer0327/sbshell/refs/heads/main"
 
 # 脚本列表
 SCRIPTS=(
-    "check_environment.sh"     # 检查系统环境
-    "install_singbox.sh"       # 安装 Sing-box
-    "manual_input.sh"          # 手动输入配置
-    "manual_update.sh"         # 手动更新配置
-    "../common/auto_update.sh" # 自动更新配置
-    "configure_tproxy.sh"      # 配置 TProxy 模式
-    "configure_tun.sh"         # 配置 TUN 模式
-    "start_singbox.sh"         # 手动启动 Sing-box
-    "stop_singbox.sh"          # 手动停止 Sing-box
-    "../common/clean_firewall.sh"             # 清理防火墙规则
-    "set_defaults.sh"          # 设置默认配置
-    "commands.sh"              # 常用命令
-    "switch_mode.sh"           # 切换代理模式
-    "manage_autostart.sh"      # 设置自启动
-    "../common/check_config.sh" # 检查配置文件
-    "../common/switch_firewall.sh" # 切换防火墙后端
-    "update_scripts.sh"        # 更新脚本
-    "update_ui.sh"             # 控制面板安装/更新/检查
-    "menu.sh"                  # 主菜单
+    "openwrt/check_environment.sh"     # 检查系统环境
+    "openwrt/install_singbox.sh"       # 安装 Sing-box
+    "openwrt/manual_input.sh"          # 手动输入配置
+    "openwrt/manual_update.sh"         # 手动更新配置
+    "common/auto_update.sh" # 自动更新配置
+    "openwrt/configure_tproxy.sh"      # 配置 TProxy 模式
+    "openwrt/configure_tun.sh"         # 配置 TUN 模式
+    "openwrt/start_singbox.sh"         # 手动启动 Sing-box
+    "openwrt/stop_singbox.sh"          # 手动停止 Sing-box
+    "common/clean_firewall.sh"             # 清理防火墙规则
+    "openwrt/set_defaults.sh"          # 设置默认配置
+    "openwrt/commands.sh"              # 常用命令
+    "openwrt/switch_mode.sh"           # 切换代理模式
+    "openwrt/manage_autostart.sh"      # 设置自启动
+    "common/check_config.sh" # 检查配置文件
+    "common/switch_firewall.sh" # 切换防火墙后端
+    "openwrt/update_scripts.sh"        # 更新脚本
+    "openwrt/update_ui.sh"             # 控制面板安装/更新/检查
+    "openwrt/menu.sh"                  # 主菜单
 )
 
 # 下载并设置单个脚本，带重试和日志记录逻辑

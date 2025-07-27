@@ -8,13 +8,29 @@ NC='\033[0m' # 无颜色
 install_dependencies() {
     local packages_to_install=()
 
-    # Source the config file if it exists
-    if [ -f /etc/sbshell/config ]; then
+    # Check for config file and prompt if it doesn't exist
+    if [ ! -f /etc/sbshell/config ]; then
+        mkdir -p /etc/sbshell
+        while true; do
+            read -rp "请选择防火墙后端 (1: nftables, 2: iptables): " fw_choice
+            case $fw_choice in
+                1)
+                    FIREWALL_BACKEND="nftables"
+                    break
+                    ;;
+                2)
+                    FIREWALL_BACKEND="iptables"
+                    break
+                    ;;
+                *)
+                    echo -e "${RED}无效的选择，请输入 1 或 2。${NC}"
+                    ;;
+            esac
+        done
+        echo "FIREWALL_BACKEND=${FIREWALL_BACKEND}" > /etc/sbshell/config
+    else
         source /etc/sbshell/config
     fi
-
-    # Set default if not set
-    FIREWALL_BACKEND=${FIREWALL_BACKEND:-nftables}
 
     # 检查防火墙依赖
     if [ "$FIREWALL_BACKEND" = "iptables" ]; then
