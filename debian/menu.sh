@@ -22,7 +22,7 @@ sudo chown "$(whoami)":"$(whoami)" "$SCRIPT_DIR"
 
 # 脚本的URL基础路径
 BASE_URL="https://ghfast.top/https://raw.githubusercontent.com/qljsyph/sbshell/refs/heads/main/debian"
-                               
+
 # 脚本列表
 SCRIPTS=(
     "check_environment.sh"     # 检查系统环境
@@ -31,17 +31,18 @@ SCRIPTS=(
     "install_singbox.sh"       # 安装 Sing-box
     "manual_input.sh"          # 手动输入配置
     "manual_update.sh"         # 手动更新配置
-    "auto_update.sh"           # 自动更新配置
+    "../common/auto_update.sh" # 自动更新配置
     "configure_tproxy.sh"      # 配置 TProxy 模式
     "configure_tun.sh"         # 配置 TUN 模式
     "start_singbox.sh"         # 手动启动 Sing-box
     "stop_singbox.sh"          # 手动停止 Sing-box
-    "clean_nft.sh"             # 清理 nftables 规则
+    "../common/clean_firewall.sh"             # 清理防火墙规则
     "set_defaults.sh"          # 设置默认配置
     "commands.sh"              # 常用命令
     "switch_mode.sh"           # 切换代理模式
     "manage_autostart.sh"      # 设置自启动
-    "check_config.sh"          # 检查配置文件
+    "../common/check_config.sh" # 检查配置文件
+    "../common/switch_firewall.sh" # 切换防火墙后端
     "update_scripts.sh"        # 更新脚本
     "update_ui.sh"             # 控制面板安装/更新/检查
     "delaytest.sh"             # 外网真实延迟测试
@@ -168,6 +169,7 @@ show_menu() {
     echo -e "${GREEN}10. 常用命令${NC}"
     echo -e "${GREEN}11. 更新脚本${NC}"
     echo -e "${GREEN}12. 更新控制面板${NC}"
+    echo -e "${YELLOW}13. 切换防火墙后端 (nftables/iptables)${NC}"
     echo -e "${GREEN}0. 退出${NC}"
     echo -e "${CYAN}=======================================${NC}"
 }
@@ -185,13 +187,13 @@ handle_choice() {
             bash "$SCRIPT_DIR/manual_update.sh"
             ;;
         3)
-            bash "$SCRIPT_DIR/auto_update.sh"
+            bash "$SCRIPT_DIR/../common/auto_update.sh"
             ;;
         4)
             bash "$SCRIPT_DIR/start_singbox.sh"
             ;;
         5)
-            bash "$SCRIPT_DIR/stop_singbox.sh"
+            bash "$SCRIPT_DIR/../common/stop_singbox.sh"
             ;;
         6)
             if command -v sing-box &> /dev/null; then
@@ -217,6 +219,9 @@ handle_choice() {
             ;;
         12)
             bash "$SCRIPT_DIR/update_ui.sh"
+            ;;
+        13)
+            bash "$SCRIPT_DIR/../common/switch_firewall.sh"
             ;;
         0)
             exit 0

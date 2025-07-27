@@ -5,6 +5,59 @@ CYAN='\033[0;36m'
 RED='\033[0;31m'
 NC='\033[0m' # 无颜色
 
+# 检查并安装依赖
+install_dependencies() {
+    local missing_packages=()
+    local packages_to_install=()
+
+    # Source the config file if it exists
+    if [ -f /etc/sbshell/config ]; then
+        source /etc/sbshell/config
+    fi
+
+    # Set default if not set
+    FIREWALL_BACKEND=${FIREWALL_BACKEND:-nftables}
+
+    # 检查 curl
+    if ! command -v curl &> /dev/null; then
+        missing_packages+=("curl")
+        packages_to_install+=("curl")
+    fi
+
+    # 检查 gpg
+    if ! command -v gpg &> /dev/null; then
+        missing_packages+=("gpg")
+        packages_to_install+=("gnupg")
+    fi
+
+    # 检查防火墙依赖
+    if [ "$FIREWALL_BACKEND" = "iptables" ]; then
+        if ! command -v iptables &> /dev/null; then
+            missing_packages+=("iptables")
+            packages_to_install+=("iptables")
+        fi
+    else # Default to nftables
+        if ! command -v nft &> /dev/null; then
+            missing_packages+=("nftables")
+            packages_to_install+=("nftables")
+        fi
+    fi
+
+    if [ ${#missing_packages[@]} -gt 0 ]; then
+        echo -e "${CYAN}检测到缺失的依赖: ${missing_packages[*]}${NC}"
+        echo "准备自动安装..."
+        sudo apt-get update -qq > /dev/null 2>&1
+        sudo apt-get install -y "${packages_to_install[@]}"
+        if [ $? -ne 0 ]; then
+            echo -e "${RED}依赖安装失败，请手动安装 ${missing_packages[*]} 后再试。${NC}"
+            exit 1
+        fi
+        echo "依赖安装成功。"
+    fi
+}
+
+install_dependencies
+
 # 检查 sing-box 是否已安装
 if command -v sing-box &> /dev/null; then
     echo -e "${CYAN}sing-box 已安装，跳过安装步骤${NC}"
@@ -50,7 +103,7 @@ Signed-By: /etc/apt/keyrings/sagernet.asc
     if command -v sing-box &> /dev/null; then
         sing_box_version=$(sing-box version | grep 'sing-box version' | awk '{print $3}')
         echo -e "${CYAN}sing-box 安装成功，版本：${NC} $sing_box_version"
-         
+
         if ! id sing-box &>/dev/null; then
             echo "正在创建 sing-box 系统用户"
             sudo useradd --system --no-create-home --shell /usr/sbin/nologin sing-box
@@ -60,7 +113,7 @@ Signed-By: /etc/apt/keyrings/sagernet.asc
         sudo chown -R sing-box:sing-box /var/lib/sing-box
         sudo chown -R sing-box:sing-box /etc/sing-box
         sudo chmod 770 /etc/sing-box
-        
+
         #if [ -f /etc/sing-box/cache.db ]; then
         #    sudo chown sing-box:sing-box /etc/sing-box/cache.db
         #    sudo chmod 660 /etc/sing-box/cache.db
@@ -126,12 +179,12 @@ Signed-By: /etc/apt/keyrings/sagernet.asc
             fi
         else
             echo "当前 sing-box 版本非 1.11.x，跳过处理。"
-    fi 
+    fi
         # 重启 sing-box 服务
         sudo systemctl daemon-reload
         sudo systemctl restart sing-box
 
-        echo -e "${CYAN}sing-box 服务已重启${NC}"      
+        echo -e "${CYAN}sing-box 服务已重启${NC}"
     else
         echo -e "${RED}sing-box 安装失败，请检查日志或网络配置${NC}"
     fi

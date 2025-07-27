@@ -85,8 +85,7 @@ SCRIPTS=(
     "configure_tproxy.sh"
     "configure_tun.sh"
     "start_singbox.sh"
-    "stop_singbox.sh"
-    "clean_nft.sh"
+    "../common/clean_firewall.sh"
     "set_defaults.sh"
     "commands.sh"
     "switch_mode.sh"
@@ -141,7 +140,7 @@ function regular_update() {
 # 重置更新
 function reset_update() {
     echo -e "${RED}即将停止 sing-box 并重置所有内容，请稍候...${NC}"
-    bash "$SCRIPT_DIR/clean_nft.sh"
+    bash "$SCRIPT_DIR/../common/clean_firewall.sh"
     rm -rf /etc/sing-box
     echo -e "${CYAN}sing-box 文件夹已删除。${NC}"
     echo -e "${CYAN}正在重新拉取脚本，请耐心等待...${NC}"

@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Create sbshell config directory
+mkdir -p /etc/sbshell
+
+# Create firewall backend config file if it doesn't exist
+if [ ! -f "/etc/sbshell/config" ]; then
+    echo 'FIREWALL_BACKEND="nftables"' > /etc/sbshell/config
+fi
+
 DEFAULTS_FILE="/etc/sing-box/defaults.conf"
 
 # 提示用户输入参数，如果为空则使用默认值

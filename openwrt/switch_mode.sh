@@ -30,11 +30,13 @@ while true; do
         1)
             echo "MODE=TProxy" | tee /etc/sing-box/mode.conf > /dev/null
             echo -e "${GREEN}当前选择模式为:TProxy 模式${NC}"
+            bash /etc/sing-box/scripts/common/configure_tproxy.sh
             break
             ;;
         2)
             echo "MODE=TUN" | tee /etc/sing-box/mode.conf > /dev/null
             echo -e "${GREEN}当前选择模式为:TUN 模式${NC}"
+            bash /etc/sing-box/scripts/common/configure_tun.sh
             break
             ;;
         *)

@@ -23,24 +23,25 @@ fi
 
 # 脚本的URL基础路径
 BASE_URL="https://gh-proxy.com/https://raw.githubusercontent.com/qljsyph/sbshell/refs/heads/main/openwrt"
-                               
+
 # 脚本列表
 SCRIPTS=(
     "check_environment.sh"     # 检查系统环境
     "install_singbox.sh"       # 安装 Sing-box
     "manual_input.sh"          # 手动输入配置
     "manual_update.sh"         # 手动更新配置
-    "auto_update.sh"           # 自动更新配置
+    "../common/auto_update.sh" # 自动更新配置
     "configure_tproxy.sh"      # 配置 TProxy 模式
     "configure_tun.sh"         # 配置 TUN 模式
     "start_singbox.sh"         # 手动启动 Sing-box
     "stop_singbox.sh"          # 手动停止 Sing-box
-    "clean_nft.sh"             # 清理 nftables 规则
+    "../common/clean_firewall.sh"             # 清理防火墙规则
     "set_defaults.sh"          # 设置默认配置
     "commands.sh"              # 常用命令
     "switch_mode.sh"           # 切换代理模式
     "manage_autostart.sh"      # 设置自启动
-    "check_config.sh"          # 检查配置文件
+    "../common/check_config.sh" # 检查配置文件
+    "../common/switch_firewall.sh" # 切换防火墙后端
     "update_scripts.sh"        # 更新脚本
     "update_ui.sh"             # 控制面板安装/更新/检查
     "menu.sh"                  # 主菜单
@@ -130,7 +131,7 @@ auto_setup() {
     command -v sing-box &> /dev/null || bash "$SCRIPT_DIR/install_singbox.sh" || bash "$SCRIPT_DIR/check_update.sh"
     bash "$SCRIPT_DIR/switch_mode.sh"
     bash "$SCRIPT_DIR/manual_input.sh"
-    bash "$SCRIPT_DIR/start_singbox.sh"  
+    bash "$SCRIPT_DIR/start_singbox.sh"
 }
 
 # 检查是否需要初始化
@@ -168,6 +169,7 @@ show_menu() {
     echo -e "${GREEN}8. 常用命令${NC}"
     echo -e "${GREEN}9. 更新脚本${NC}"
     echo -e "${GREEN}10. 更新控制面板${NC}"
+    echo -e "${YELLOW}11. 切换防火墙后端 (nftables/iptables)${NC}"
     echo -e "${GREEN}0. 退出${NC}"
     echo -e "${CYAN}=======================================${NC}"
 }
@@ -184,13 +186,13 @@ handle_choice() {
             bash "$SCRIPT_DIR/manual_update.sh"
             ;;
         3)
-            bash "$SCRIPT_DIR/auto_update.sh"
+            bash "$SCRIPT_DIR/../common/auto_update.sh"
             ;;
         4)
             bash "$SCRIPT_DIR/start_singbox.sh"
             ;;
         5)
-            bash "$SCRIPT_DIR/stop_singbox.sh"
+            bash "$SCRIPT_DIR/../common/stop_singbox.sh"
             ;;
         6)
             bash "$SCRIPT_DIR/set_defaults.sh"
@@ -206,6 +208,9 @@ handle_choice() {
             ;;
         10)
             bash "$SCRIPT_DIR/update_ui.sh"
+            ;;
+        11)
+            bash "$SCRIPT_DIR/../common/switch_firewall.sh"
             ;;
         0)
             exit 0
