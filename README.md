@@ -21,7 +21,7 @@ Sbshell 是一款针对 官方sing-box 的辅助运行脚本，旨在解决官�
 
 ## 一键脚本：(请自行安装curl和bash，如果缺少的话)
 ```
-bash <(curl -sL https://ghfast.top/https://raw.githubusercontent.com/qljsyph/sbshell/refs/heads/main/sbshall.sh)
+bash <(curl -sL https://ghfast.top/https://raw.githubusercontent.com/boer0327/sbshell/refs/heads/main/sbshall.sh)
 ```
 - 初始化运行结束，输入“**sb**”进入菜单
 - 目前支持系统为deiban/ubuntu/armbian/openwrt。
@@ -30,23 +30,23 @@ bash <(curl -sL https://ghfast.top/https://raw.githubusercontent.com/qljsyph/sbs
 
 ### 系统信息自动显示美化脚本：
 ```
-bash <(curl -sL https://gh-proxy.com/https://raw.githubusercontent.com/qljsyph/DPInfo-script/refs/heads/main/auto-sysinfo.sh)
+bash <(curl -sL https://gh-proxy.com/https://raw.githubusercontent.com/boer0327/DPInfo-script/refs/heads/main/auto-sysinfo.sh)
 ```
   执行后每次进入ssh会自动显示很多必要信息！
   仓库：
-  https://github.com/qljsyph/DPInfo-script
+  https://github.com/boer0327/DPInfo-script
 
 ## 适配配置文件：
 
 ### 稳定版(1.11)：  
 tproxy：
-https://gh-proxy.com/https://raw.githubusercontent.com/qljsyph/sbshell/refs/heads/main/config_template/config_tproxy.json
+https://gh-proxy.com/https://raw.githubusercontent.com/boer0327/sbshell/refs/heads/main/config_template/config_tproxy.json
 
 tun：
-https://gh-proxy.com/https://raw.githubusercontent.com/qljsyph/sbshell/refs/heads/main/config_template/config_tun.json  
+https://gh-proxy.com/https://raw.githubusercontent.com/boer0327/sbshell/refs/heads/main/config_template/config_tun.json  
 
 ## 其他问题：
 
-**请查看[wiki](https://github.com/qljsyph/sbshell/wiki)**
+**请查看[wiki](https://github.com/boer0327/sbshell/wiki)**
 
 
