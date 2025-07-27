@@ -21,8 +21,11 @@ install_dependencies() {
         if ! opkg list-installed | grep -q "kmod-ipt-tproxy"; then
             packages_to_install+=("kmod-ipt-tproxy")
         fi
-        if ! opkg list-installed | grep -q "iptables-nft"; then
-            packages_to_install+=("iptables-nft")
+        if ! opkg list-installed | grep -q "iptables-mod-tproxy"; then
+            packages_to_install+=("iptables-mod-tproxy")
+        fi
+        if ! opkg list-installed | grep -q "iptables-mod-socket"; then
+            packages_to_install+=("iptables-mod-socket")
         fi
     else # Default to nftables
         if ! opkg list-installed | grep -q "kmod-nft-tproxy"; then
